@@ -174,6 +174,7 @@ function entryCard(item) {
       ${item.example ? `<p class="example"><span class="field-label">Example</span> ${escapeHtml(item.example)}</p>` : ""}
       ${item.synonyms ? `<p class="notes"><span class="field-label">Synonyms</span> ${escapeHtml(item.synonyms)}</p>` : ""}
       ${item.translation ? `<p class="notes"><span class="field-label">Translation</span> ${escapeHtml(item.translation)}</p>` : ""}
+      ${item.breakdown ? `<p class="notes"><span class="field-label">Breakdown</span> ${escapeHtml(item.breakdown)}</p>` : ""}
       ${item.notes ? `<p class="notes">${escapeHtml(item.notes)}</p>` : ""}
     </article>
   `;
@@ -250,6 +251,7 @@ function renderStudy(lesson) {
                 ${current.example ? `<p class="example">${escapeHtml(current.example)}</p>` : ""}
                 ${current.synonyms ? `<p class="notes"><span class="field-label">Synonyms</span> ${escapeHtml(current.synonyms)}</p>` : ""}
                 ${current.translation ? `<p>${escapeHtml(current.translation)}</p>` : ""}
+                ${current.breakdown ? `<p class="notes"><span class="field-label">Breakdown</span> ${escapeHtml(current.breakdown)}</p>` : ""}
                 ${current.notes ? `<p class="notes">${escapeHtml(current.notes)}</p>` : ""}
               </div>
             </div>

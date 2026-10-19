@@ -5,6 +5,7 @@ const FIELD_ALIASES = {
   ipa: ["ipa", "pronunciation"],
   translation: ["translation"],
   synonyms: ["synonyms", "synonym", "alternatives", "alternative"],
+  breakdown: ["breakdown", "break down", "unpack"],
   notes: ["notes", "note", "tip"],
 };
 
@@ -103,6 +104,7 @@ function parseTable(section) {
       ipa: row.ipa || row.pronunciation || "",
       translation: row.translation || "",
       synonyms: row.synonyms || row.synonym || row.alternatives || row.alternative || "",
+      breakdown: row.breakdown || row.unpack || "",
       notes: row.notes || row.note || row.tip || "",
     });
   }
@@ -114,25 +116,37 @@ function parseLabeledFields(block) {
   const fields = {};
   const leftover = [];
   const lines = block.split("\n");
+  let currentField = null;
 
   for (const line of lines) {
     const labeled = line.match(/^\*\*([^*]+)\*\*\s*:?\s*(.*)$/);
-    if (!labeled) {
-      leftover.push(line);
+    if (labeled) {
+      const label = labeled[1].trim().toLowerCase().replace(/:$/, "");
+      const value = stripMarkdown(labeled[2] || "");
+      let matched = false;
+      for (const [field, aliases] of Object.entries(FIELD_ALIASES)) {
+        if (aliases.includes(label)) {
+          fields[field] = value;
+          currentField = field;
+          matched = true;
+          break;
+        }
+      }
+      if (!matched) {
+        currentField = null;
+        if (value) leftover.push(value);
+      }
       continue;
     }
 
-    const label = labeled[1].trim().toLowerCase().replace(/:$/, "");
-    const value = stripMarkdown(labeled[2] || "");
-    let matched = false;
-    for (const [field, aliases] of Object.entries(FIELD_ALIASES)) {
-      if (aliases.includes(label)) {
-        fields[field] = value;
-        matched = true;
-        break;
-      }
+    if (currentField && line.trim()) {
+      const extra = stripMarkdown(line);
+      fields[currentField] = [fields[currentField], extra].filter(Boolean).join(" ");
+      continue;
     }
-    if (!matched && value) leftover.push(value);
+
+    leftover.push(line);
+    if (line.trim()) currentField = null;
   }
 
   const untitled = leftover.join("\n").trim();
@@ -160,6 +174,7 @@ function parseHeadingEntries(section) {
       ipa: fields.ipa || "",
       translation: fields.translation || "",
       synonyms: fields.synonyms || "",
+      breakdown: fields.breakdown || "",
       notes: fields.notes || "",
     });
   }

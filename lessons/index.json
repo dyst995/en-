@@ -6,6 +6,13 @@
       "title": "C1 podcast phrases",
       "level": "C1",
       "description": "Host-style language for intros, promises, and serious conversation."
+    },
+    {
+      "slug": "02-c1-argument-language",
+      "file": "02-c1-argument-language.md",
+      "title": "C1 argument language",
+      "level": "C1",
+      "description": "Words and phrases that make discussion sound precise, not just opinionated."
     }
   ]
 }
