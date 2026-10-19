@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>English phrasebook</title>
+    <meta name="description" content="Study English words and phrases from markdown lessons, with flashcards for each lesson.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f6b4d'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='28' fill='%23f6f1e8' font-family='Georgia'%3Ee%3C/text%3E%3C/svg%3E">
+  </head>
+  <body>
+    <a class="skip-link" href="#app">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href="#/">
+        <strong>English</strong>
+        <span>Words, phrases, flashcards</span>
+      </a>
+      <div class="header-actions">
+        <button class="icon-button" id="theme-toggle" type="button" aria-pressed="false">Dark</button>
+      </div>
+    </header>
+    <main class="wrap" id="app">
+      <p class="empty-state">Loading lessons…</p>
+    </main>
+    <footer class="site-footer">
+      Lessons are markdown files in <code>lessons/</code>. Add a file, list it in <code>lessons/index.json</code>, and it appears here.
+    </footer>
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>

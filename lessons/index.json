@@ -1,0 +1,25 @@
+{
+  "lessons": [
+    {
+      "slug": "01-greetings",
+      "file": "01-greetings.md",
+      "title": "Everyday Greetings",
+      "level": "A1",
+      "description": "Say hello, goodbye, and make a first impression."
+    },
+    {
+      "slug": "02-daily-life",
+      "file": "02-daily-life.md",
+      "title": "Daily Life",
+      "level": "A2",
+      "description": "Talk about routines, time, and how your day is going."
+    },
+    {
+      "slug": "03-at-a-cafe",
+      "file": "03-at-a-cafe.md",
+      "title": "At a Caf\u00e9",
+      "level": "A2",
+      "description": "Order drinks, ask questions, and pay without sounding unsure."
+    }
+  ]
+}
