@@ -4,6 +4,7 @@ const FIELD_ALIASES = {
   example: ["example", "examples"],
   ipa: ["ipa", "pronunciation"],
   translation: ["translation"],
+  synonyms: ["synonyms", "synonym", "alternatives", "alternative"],
   notes: ["notes", "note", "tip"],
 };
 
@@ -101,6 +102,7 @@ function parseTable(section) {
       example: row.example || row.examples || "",
       ipa: row.ipa || row.pronunciation || "",
       translation: row.translation || "",
+      synonyms: row.synonyms || row.synonym || row.alternatives || row.alternative || "",
       notes: row.notes || row.note || row.tip || "",
     });
   }
@@ -157,6 +159,7 @@ function parseHeadingEntries(section) {
       example: fields.example || "",
       ipa: fields.ipa || "",
       translation: fields.translation || "",
+      synonyms: fields.synonyms || "",
       notes: fields.notes || "",
     });
   }

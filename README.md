@@ -27,6 +27,7 @@ description: Ask for sizes, prices, and bags.
 
 ### receipt
 **Definition:** The paper that proves what you bought and how much you paid.
+**Synonyms:** bill, proof of purchase
 **Example:** Could I have a receipt, please?
 **IPA:** /rɪˈsiːt/
 **Notes:** Optional extra tip.
@@ -36,6 +37,7 @@ description: Ask for sizes, prices, and bags.
 
 ### How much is this?
 **Definition:** A direct question about the price of something in front of you.
+**Synonyms:** What’s the price of this?, How much does this cost?
 **Example:** Excuse me, how much is this jacket?
 ```
 

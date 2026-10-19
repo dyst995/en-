@@ -115,7 +115,7 @@ function renderHome() {
     ${
       lessons.length
         ? `<div class="lesson-grid">${lessons.map(lessonCard).join("")}</div>`
-        : `<p class="empty-state">No lessons match that search.</p>`
+        : `<p class="empty-state">${state.index.length ? "No lessons match that search." : "No lessons yet. Add a markdown file in lessons/ and list it in lessons/index.json."}</p>`
     }
   `;
 }
@@ -172,6 +172,7 @@ function entryCard(item) {
       <h3>${escapeHtml(item.term)}</h3>
       ${item.definition ? `<p>${escapeHtml(item.definition)}</p>` : ""}
       ${item.example ? `<p class="example"><span class="field-label">Example</span> ${escapeHtml(item.example)}</p>` : ""}
+      ${item.synonyms ? `<p class="notes"><span class="field-label">Synonyms</span> ${escapeHtml(item.synonyms)}</p>` : ""}
       ${item.translation ? `<p class="notes"><span class="field-label">Translation</span> ${escapeHtml(item.translation)}</p>` : ""}
       ${item.notes ? `<p class="notes">${escapeHtml(item.notes)}</p>` : ""}
     </article>
@@ -247,6 +248,7 @@ function renderStudy(lesson) {
                 <span class="flash-kind">Meaning</span>
                 <p class="flash-definition">${escapeHtml(current.definition || "No definition yet.")}</p>
                 ${current.example ? `<p class="example">${escapeHtml(current.example)}</p>` : ""}
+                ${current.synonyms ? `<p class="notes"><span class="field-label">Synonyms</span> ${escapeHtml(current.synonyms)}</p>` : ""}
                 ${current.translation ? `<p>${escapeHtml(current.translation)}</p>` : ""}
                 ${current.notes ? `<p class="notes">${escapeHtml(current.notes)}</p>` : ""}
               </div>
