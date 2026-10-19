@@ -1,30 +1,30 @@
 :root {
-  --paper: #f3eee4;
-  --paper-2: #eae1d2;
-  --ink: #1c1814;
-  --muted: #6d655b;
-  --line: #ddd2c1;
-  --card: #fffcf7;
-  --forest: #1f6b4d;
-  --forest-dark: #164f39;
-  --copper: #c45c26;
-  --shadow: 0 18px 40px rgba(48, 32, 14, 0.08);
+  --paper: #eef2f7;
+  --paper-2: #d7e3f6;
+  --ink: #10141c;
+  --muted: #5b6576;
+  --line: #cdd6e4;
+  --card: #ffffff;
+  --forest: #155eef;
+  --forest-dark: #0b3cc9;
+  --copper: #0f766e;
+  --shadow: 0 18px 40px rgba(16, 36, 84, 0.08);
   --radius: 18px;
   --sans: "Sora", system-ui, sans-serif;
   --serif: "Newsreader", Georgia, serif;
 }
 
 :root[data-theme="dark"] {
-  --paper: #161310;
-  --paper-2: #221c17;
-  --ink: #f4ece1;
-  --muted: #b3a89a;
-  --line: #3a322b;
-  --card: #1f1a16;
-  --forest: #7dcca8;
-  --forest-dark: #b7e4cd;
-  --copper: #e08956;
-  --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  --paper: #0b1020;
+  --paper-2: #162038;
+  --ink: #e8eefc;
+  --muted: #9aa6c0;
+  --line: #2a3450;
+  --card: #141b2e;
+  --forest: #7aa2ff;
+  --forest-dark: #c5d6ff;
+  --copper: #5eead4;
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -45,7 +45,7 @@ body {
   font-family: var(--sans);
   background:
     radial-gradient(900px 420px at 8% -8%, var(--paper-2), transparent 55%),
-    radial-gradient(700px 360px at 100% 0%, rgba(196, 92, 38, 0.08), transparent 45%),
+    radial-gradient(700px 360px at 100% 0%, rgba(21, 94, 239, 0.1), transparent 45%),
     var(--paper);
 }
 
@@ -169,11 +169,11 @@ input {
 
 .primary-button {
   background: var(--forest);
-  color: #f7fff9;
+  color: #f4f8ff;
 }
 
 :root[data-theme="dark"] .primary-button {
-  color: #10231a;
+  color: #0b1020;
 }
 
 .text-button {
@@ -293,12 +293,12 @@ h1 {
   border-radius: 999px;
   padding: 4px 10px;
   font-size: 0.75rem;
-  background: rgba(31, 107, 77, 0.12);
+  background: rgba(21, 94, 239, 0.12);
   color: var(--forest-dark);
 }
 
 :root[data-theme="dark"] .badge {
-  background: rgba(125, 204, 168, 0.16);
+  background: rgba(122, 162, 255, 0.18);
   color: var(--forest);
 }
 
@@ -491,7 +491,7 @@ h1 {
 }
 
 .flash-front {
-  background: linear-gradient(180deg, rgba(31, 107, 77, 0.08), transparent 40%), var(--card);
+  background: linear-gradient(180deg, rgba(21, 94, 239, 0.1), transparent 40%), var(--card);
 }
 
 .flash-back {
