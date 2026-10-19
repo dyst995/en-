@@ -2,6 +2,7 @@ import { loadLesson, loadLessonIndex } from "./parser.js";
 
 const KNOWN_KEY = "english-known-v1";
 const THEME_KEY = "english-theme";
+const FACE_KEY = "english-flash-face";
 const app = document.querySelector("#app");
 const themeButton = document.querySelector("#theme-toggle");
 
@@ -13,6 +14,7 @@ const state = {
   study: {
     filter: "all",
     shuffled: false,
+    face: localStorage.getItem(FACE_KEY) === "meaning" ? "meaning" : "term",
     index: 0,
     flipped: false,
     items: [],
@@ -197,12 +199,33 @@ function studyItems(lesson) {
   return items;
 }
 
+function termFace(item) {
+  return `
+    <span class="flash-kind">${escapeHtml(item.kind)}</span>
+    <span class="flash-term">${escapeHtml(item.term)}</span>
+    ${item.ipa ? `<span class="ipa">${escapeHtml(item.ipa)}</span>` : ""}
+  `;
+}
+
+function meaningFace(item) {
+  return `
+    <span class="flash-kind">Meaning</span>
+    <p class="flash-definition">${escapeHtml(item.definition || "No definition yet.")}</p>
+    ${item.example ? `<p class="example">${escapeHtml(item.example)}</p>` : ""}
+    ${item.synonyms ? `<p class="notes"><span class="field-label">Synonyms</span> ${escapeHtml(item.synonyms)}</p>` : ""}
+    ${item.translation ? `<p>${escapeHtml(item.translation)}</p>` : ""}
+    ${item.breakdown ? `<p class="notes"><span class="field-label">Breakdown</span> ${escapeHtml(item.breakdown)}</p>` : ""}
+    ${item.notes ? `<p class="notes">${escapeHtml(item.notes)}</p>` : ""}
+  `;
+}
+
 function renderStudy(lesson) {
   const items = state.study.items;
   const total = items.length;
   const current = items[state.study.index];
   const progress = total ? Math.round(((state.study.index + 1) / total) * 100) : 0;
   const known = current ? isKnown(lesson.slug, current.id) : false;
+  const meaningFirst = state.study.face === "meaning";
 
   app.innerHTML = `
     <div class="page-head">
@@ -226,6 +249,10 @@ function renderStudy(lesson) {
           <button class="ghost-button" data-shuffle type="button">${state.study.shuffled ? "Original order" : "Shuffle"}</button>
         </div>
       </div>
+      <div class="tabs" role="group" aria-label="Which side to show first">
+        <button class="tab ${meaningFirst ? "" : "is-active"}" data-face="term" type="button">Word first</button>
+        <button class="tab ${meaningFirst ? "is-active" : ""}" data-face="meaning" type="button">Meaning first</button>
+      </div>
       ${
         current
           ? `
@@ -238,28 +265,19 @@ function renderStudy(lesson) {
         </div>
         <div class="flash-stage">
           <div class="card-scene">
-            <div class="flash-card ${state.study.flipped ? "is-flipped" : ""}" data-flip role="button" tabindex="0" aria-live="polite">
+            <div class="flash-card ${state.study.flipped ? "is-flipped" : ""}" aria-live="polite">
               <div class="flash-face flash-front">
-                <span class="flash-kind">${escapeHtml(current.kind)}</span>
-                <span class="flash-term">${escapeHtml(current.term)}</span>
-                ${current.ipa ? `<span class="ipa">${escapeHtml(current.ipa)}</span>` : ""}
-                <span class="hint">Tap or press Space to flip</span>
+                ${meaningFirst ? meaningFace(current) : termFace(current)}
               </div>
               <div class="flash-face flash-back">
-                <span class="flash-kind">Meaning</span>
-                <p class="flash-definition">${escapeHtml(current.definition || "No definition yet.")}</p>
-                ${current.example ? `<p class="example">${escapeHtml(current.example)}</p>` : ""}
-                ${current.synonyms ? `<p class="notes"><span class="field-label">Synonyms</span> ${escapeHtml(current.synonyms)}</p>` : ""}
-                ${current.translation ? `<p>${escapeHtml(current.translation)}</p>` : ""}
-                ${current.breakdown ? `<p class="notes"><span class="field-label">Breakdown</span> ${escapeHtml(current.breakdown)}</p>` : ""}
-                ${current.notes ? `<p class="notes">${escapeHtml(current.notes)}</p>` : ""}
+                ${meaningFirst ? termFace(current) : meaningFace(current)}
               </div>
             </div>
           </div>
+          <button class="primary-button flip-button" data-flip type="button">${state.study.flipped ? "Flip back" : "Flip"}</button>
         </div>
         <div class="flash-nav">
           <button class="ghost-button" data-prev type="button">Previous</button>
-          <button class="primary-button" data-flip data-flip-label type="button">${state.study.flipped ? "Show term" : "Show meaning"}</button>
           <button class="ghost-button" data-next type="button">Next</button>
           <button class="ghost-button" data-known type="button">${known ? "Unmark known" : "Mark known"}</button>
         </div>
@@ -319,8 +337,8 @@ async function render() {
 function toggleFlip() {
   state.study.flipped = !state.study.flipped;
   app.querySelector(".flash-card")?.classList.toggle("is-flipped", state.study.flipped);
-  const label = app.querySelector("[data-flip-label]");
-  if (label) label.textContent = state.study.flipped ? "Show term" : "Show meaning";
+  const button = app.querySelector("[data-flip]");
+  if (button) button.textContent = state.study.flipped ? "Flip back" : "Flip";
 }
 
 function moveCard(step) {
@@ -364,6 +382,16 @@ app.addEventListener("click", (event) => {
     state.study.flipped = false;
     state.study.items = studyItems(lesson);
     renderStudy(lesson);
+    return;
+  }
+
+  const face = event.target.closest("[data-face]");
+  if (face) {
+    state.study.face = face.dataset.face;
+    state.study.flipped = false;
+    localStorage.setItem(FACE_KEY, state.study.face);
+    const lesson = state.lessons.get(state.route.slug);
+    if (lesson) renderStudy(lesson);
     return;
   }
 
